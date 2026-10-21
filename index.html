@@ -3,242 +3,302 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NexusPay PTC - Earn & Withdraw</title>
+  <title>NexusPay Pro - Premium PTC Earning Platform</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #090d16;
-      --card-bg: rgba(23, 32, 54, 0.75);
-      --card-border: rgba(255, 255, 255, 0.08);
+      --bg: #0b0f17;
+      --panel: #131b2e;
+      --card: #1c273e;
+      --border: rgba(255, 255, 255, 0.08);
       --primary: #38bdf8;
       --accent: #22c55e;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
+      --text: #f8fafc;
+      --muted: #94a3b8;
     }
 
     * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; }
-    
-    body {
-      background: radial-gradient(circle at top right, #1e1b4b, #090d16 60%);
-      color: var(--text-main);
-      min-height: 100vh;
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* NAVBAR */
+    header {
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      padding: 20px;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .logo { font-size: 20px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px; }
+    .logo span { color: var(--primary); }
+    .user-pill {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; color: var(--primary);
     }
 
-    .container {
-      width: 100%;
-      max-width: 460px;
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 32px 28px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    /* MAIN CONTAINER */
+    main { max-width: 1100px; width: 100%; margin: 0 auto; padding: 30px 20px; flex: 1; }
+
+    /* LOGIN CONTAINER */
+    .login-box {
+      max-width: 420px; margin: 40px auto; background: var(--panel); border: 1px solid var(--border);
+      border-radius: 20px; padding: 32px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
-
-    .brand-header { text-align: center; margin-bottom: 24px; }
-    .brand-badge { display: inline-block; padding: 5px 12px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); color: var(--primary); border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
-    h1 { font-size: 24px; font-weight: 800; color: #fff; }
-    p.subtitle { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
-
-    .input-group { margin-bottom: 16px; text-align: left; }
-    label { font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px; }
+    .input-group { text-align: left; margin-bottom: 20px; }
+    .input-group label { font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 8px; display: block; }
     input, select {
-      width: 100%;
-      padding: 14px;
-      border-radius: 12px;
-      border: 1px solid var(--card-border);
-      background: rgba(15, 23, 42, 0.8);
-      color: #fff;
-      font-size: 14px;
-      outline: none;
+      width: 100%; padding: 14px; border-radius: 10px; border: 1px solid var(--border);
+      background: #090d16; color: #fff; font-size: 14px; outline: none;
     }
     input:focus, select:focus { border-color: var(--primary); }
 
-    .btn-primary {
-      width: 100%;
-      padding: 14px;
-      border-radius: 12px;
-      border: none;
-      background: linear-gradient(135deg, #0284c7, #2563eb);
-      color: white;
-      font-weight: 700;
-      font-size: 15px;
-      cursor: pointer;
-      transition: 0.2s;
+    .btn {
+      width: 100%; padding: 14px; border-radius: 10px; border: none;
+      background: linear-gradient(135deg, #0284c7, #2563eb); color: #fff;
+      font-weight: 700; font-size: 15px; cursor: pointer; transition: 0.2s;
     }
-    .btn-primary:hover { opacity: 0.9; }
+    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
 
+    /* DASHBOARD LAYOUT */
     .dashboard { display: none; }
-    .user-banner { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.5); padding: 12px 16px; border-radius: 12px; margin-bottom: 20px; font-size: 13px; border: 1px solid var(--card-border); }
+    .hero-banner {
+      background: linear-gradient(135deg, #1e1b4b, var(--panel));
+      border: 1px solid var(--border); border-radius: 20px; padding: 24px; margin-bottom: 24px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+    }
+    .hero-text h2 { font-size: 22px; font-weight: 800; }
+    .hero-text p { color: var(--muted); font-size: 14px; margin-top: 4px; }
 
-    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-    .stat-card { background: rgba(15, 23, 42, 0.7); padding: 14px; border-radius: 14px; border: 1px solid var(--card-border); text-align: left; }
-    .stat-card small { color: var(--text-muted); font-size: 11px; display: block; margin-bottom: 4px; }
-    .stat-card .val { font-size: 18px; font-weight: 800; color: var(--accent); }
+    .stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 30px; }
+    .stat-card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+    .stat-card small { color: var(--muted); font-size: 12px; font-weight: 600; text-transform: uppercase; }
+    .stat-card .amount { font-size: 26px; font-weight: 800; color: var(--accent); margin-top: 6px; }
 
-    .ad-card { background: rgba(30, 41, 59, 0.6); border: 1px solid var(--card-border); border-radius: 14px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-    .ad-title { font-size: 14px; font-weight: 700; }
-    .ad-reward { font-size: 12px; color: var(--accent); font-weight: 600; margin-top: 2px; }
+    .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+    @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
 
-    .btn-ad { padding: 8px 14px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); color: var(--primary); border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; }
-    .btn-ad:disabled { opacity: 0.5; cursor: not-allowed; }
+    .section-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
 
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100; justify-content: center; align-items: center; padding: 20px; }
-    .modal-content { background: #0f172a; border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; width: 100%; max-width: 380px; text-align: center; }
-    .progress-bar-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 16px 0; overflow: hidden; }
-    .progress-bar-fill { height: 100%; width: 0%; background: var(--primary); transition: width 1s linear; }
+    .ad-list { display: flex; flex-direction: column; gap: 12px; }
+    .ad-card {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px;
+      display: flex; justify-content: space-between; align-items: center; transition: 0.2s;
+    }
+    .ad-card:hover { border-color: rgba(56, 189, 248, 0.3); }
+    .ad-info h4 { font-size: 15px; font-weight: 700; }
+    .ad-info span { color: var(--accent); font-size: 13px; font-weight: 700; }
+
+    .btn-sm { width: auto; padding: 10px 18px; font-size: 13px; background: rgba(56, 189, 248, 0.15); color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.3); }
+    .btn-sm:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* RECENT PAYOUTS FEED */
+    .payouts-card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+    .payout-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .payout-item:last-child { border: none; }
+
+    /* MODALS */
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 100; justify-content: center; align-items: center; padding: 20px; }
+    .modal-box { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 28px; width: 100%; max-width: 400px; text-align: center; }
+    .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 20px 0; overflow: hidden; }
+    .progress-fill { height: 100%; width: 0%; background: var(--primary); transition: width 1s linear; }
+
+    footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; margin-top: auto; }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    
-    <!-- LOGIN VIEW -->
-    <div id="loginView">
-      <div class="brand-header">
-        <span class="brand-badge">PTC Earning Portal</span>
-        <h1>NexusPay 🚀</h1>
-        <p class="subtitle">Watch ads & withdraw via JazzCash / EasyPaisa</p>
-      </div>
+  <!-- HEADER -->
+  <header>
+    <div class="logo">🚀 NexusPay<span>PRO</span></div>
+    <div class="user-pill" id="navUser">Status: Guest</div>
+  </header>
 
+  <main>
+    <!-- LOGIN PAGE -->
+    <div id="loginSection" class="login-box">
+      <h2 style="font-size:24px; font-weight:800; margin-bottom:8px;">Welcome Back 👋</h2>
+      <p style="color:var(--muted); font-size:13px; margin-bottom:24px;">Enter your email to open your earning dashboard</p>
+      
       <div class="input-group">
-        <label>Enter Email</label>
+        <label>Email Address</label>
         <input type="email" id="userEmail" placeholder="e.g. user@gmail.com" />
       </div>
 
-      <button class="btn-primary" onclick="enterDashboard()">Login / Register</button>
+      <button class="btn" onclick="login()">Enter Portal ⚡</button>
     </div>
 
-    <!-- DASHBOARD VIEW -->
-    <div id="dashboardView" class="dashboard">
-      <div class="user-banner">
-        <div><small style="color:var(--text-muted)">User:</small> <span id="displayUser" style="font-weight:700"></span></div>
-        <span style="color:var(--accent); font-weight:700;">● Online</span>
+    <!-- DASHBOARD PAGE -->
+    <div id="dashboardSection" class="dashboard">
+      
+      <div class="hero-banner">
+        <div class="hero-text">
+          <h2>Earn Money Watching Sponsor Ads 💰</h2>
+          <p>Watch 5-second ads and withdraw instantly to JazzCash or EasyPaisa.</p>
+        </div>
+        <button class="btn" style="width:auto; padding:12px 24px; background: #16a34a;" onclick="openWithdraw()">Withdraw Funds 💳</button>
       </div>
 
-      <div class="stats-grid">
+      <div class="stats-container">
         <div class="stat-card">
-          <small>Balance</small>
-          <div class="val">Rs. <span id="totalBalance">0</span></div>
+          <small>Current Balance</small>
+          <div class="amount">Rs. <span id="balance">0.00</span></div>
         </div>
         <div class="stat-card">
-          <small>Ads Watched</small>
-          <div class="val" style="color: var(--primary)" id="adsCount">0</div>
+          <small>Total Ads Completed</small>
+          <div class="amount" style="color:var(--primary);" id="adsCount">0</div>
+        </div>
+        <div class="stat-card">
+          <small>Minimum Payout</small>
+          <div class="amount" style="color:#f59e0b;">Rs. 50.00</div>
         </div>
       </div>
 
-      <div style="font-size:14px; font-weight:700; margin-bottom:10px; text-align:left;">Available Sponsor Ads</div>
-
-      <div class="ad-card">
+      <div class="grid-2">
+        <!-- ADS SECTION -->
         <div>
-          <div class="ad-title">Sponsor Ad #1</div>
-          <div class="ad-reward">+ Rs. 15.00</div>
-        </div>
-        <button class="btn-ad" id="ad1" onclick="startAd(1, 15)">Watch (5s)</button>
-      </div>
+          <div class="section-title">📺 Available High-Pay Ads</div>
+          <div class="ad-list">
+            <div class="ad-card">
+              <div class="ad-info">
+                <h4>Sponsor Ad #1 (Tech Promo)</h4>
+                <span>+ Rs. 15.00</span>
+              </div>
+              <button class="btn btn-sm" id="ad1" onclick="watchAd(1, 15)">Watch Ad (5s)</button>
+            </div>
 
-      <div class="ad-card">
+            <div class="ad-card">
+              <div class="ad-info">
+                <h4>Sponsor Ad #2 (Crypto Exchange)</h4>
+                <span>+ Rs. 25.00</span>
+              </div>
+              <button class="btn btn-sm" id="ad2" onclick="watchAd(2, 25)">Watch Ad (5s)</button>
+            </div>
+
+            <div class="ad-card">
+              <div class="ad-info">
+                <h4>Sponsor Ad #3 (Gaming App)</h4>
+                <span>+ Rs. 20.00</span>
+              </div>
+              <button class="btn btn-sm" id="ad3" onclick="watchAd(3, 20)">Watch Ad (5s)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECENT PAYOUTS -->
         <div>
-          <div class="ad-title">Sponsor Ad #2</div>
-          <div class="ad-reward">+ Rs. 25.00</div>
+          <div class="section-title">🔥 Live Payout Feed</div>
+          <div class="payouts-card">
+            <div class="payout-item">
+              <span>Ali R. (JazzCash)</span>
+              <strong style="color:var(--accent)">Rs. 150</strong>
+            </div>
+            <div class="payout-item">
+              <span>Usman K. (EasyPaisa)</span>
+              <strong style="color:var(--accent)">Rs. 200</strong>
+            </div>
+            <div class="payout-item">
+              <span>Hamza S. (JazzCash)</span>
+              <strong style="color:var(--accent)">Rs. 80</strong>
+            </div>
+            <div class="payout-item">
+              <span>Zain M. (EasyPaisa)</span>
+              <strong style="color:var(--accent)">Rs. 350</strong>
+            </div>
+          </div>
         </div>
-        <button class="btn-ad" id="ad2" onclick="startAd(2, 25)">Watch (5s)</button>
       </div>
 
-      <button class="btn-primary" style="margin-top: 15px; background: #16a34a;" onclick="openWithdrawModal()">Withdraw Funds 💳</button>
     </div>
+  </main>
 
-  </div>
-
-  <!-- AD TIMER MODAL -->
+  <!-- AD MODAL -->
   <div class="modal" id="adModal">
-    <div class="modal-content">
+    <div class="modal-box">
       <h3>Watching Sponsor Ad</h3>
-      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
-      <div id="countdown" style="font-size: 22px; font-weight: 800; color: var(--primary);">5s</div>
+      <div class="progress-bar"><div class="progress-fill" id="pFill"></div></div>
+      <div id="timer" style="font-size:24px; font-weight:800; color:var(--primary);">5s</div>
     </div>
   </div>
 
   <!-- WITHDRAW MODAL -->
   <div class="modal" id="withdrawModal">
-    <div class="modal-content" style="text-align: left;">
-      <h3 style="margin-bottom: 12px; text-align: center;">Request Withdrawal</h3>
+    <div class="modal-box" style="text-align:left;">
+      <h3 style="text-align:center; margin-bottom:16px;">Request Withdrawal</h3>
       
       <div class="input-group">
         <label>Payment Method</label>
-        <select id="payMethod">
+        <select id="method">
           <option value="JazzCash">JazzCash</option>
           <option value="EasyPaisa">EasyPaisa</option>
         </select>
       </div>
 
       <div class="input-group">
-        <label>Account Mobile Number</label>
-        <input type="text" id="accNumber" placeholder="03001234567" />
+        <label>Account Number</label>
+        <input type="text" id="accNo" placeholder="03001234567" />
       </div>
 
       <div class="input-group">
-        <label>Account Title Name</label>
-        <input type="text" id="accName" placeholder="e.g. Haider Ali" />
+        <label>Account Title</label>
+        <input type="text" id="accName" placeholder="Account Holder Name" />
       </div>
 
-      <button class="btn-primary" onclick="submitWithdraw()">Submit Request</button>
-      <button class="btn-primary" style="margin-top: 8px; background: transparent; border: 1px solid var(--card-border);" onclick="closeWithdrawModal()">Cancel</button>
+      <button class="btn" onclick="submitWithdraw()">Submit Payout Request</button>
+      <button class="btn" style="margin-top:8px; background:transparent; border:1px solid var(--border);" onclick="closeWithdraw()">Cancel</button>
     </div>
   </div>
 
-  <script>
-    let currentUser = "";
-    let balance = 0;
-    let completedCount = 0;
+  <footer>
+    &copy; 2026 NexusPay Network. All rights reserved. Secure PTC Portal.
+  </footer>
 
-    function enterDashboard() {
+  <script>
+    let user = "";
+    let bal = 0;
+    let watched = 0;
+
+    function login() {
       const email = document.getElementById('userEmail').value.trim();
       if(!email || !email.includes('@')) {
         alert('Please enter a valid email address!');
         return;
       }
-      currentUser = email;
-      
-      const savedBalance = localStorage.getItem('ptc_bal_' + currentUser);
-      if(savedBalance) {
-        balance = parseFloat(savedBalance);
-      }
+      user = email;
+      const saved = localStorage.getItem('nexus_bal_' + user);
+      if(saved) bal = parseFloat(saved);
 
-      document.getElementById('displayUser').innerText = email.split('@')[0];
-      document.getElementById('totalBalance').innerText = balance;
-      document.getElementById('loginView').style.display = 'none';
-      document.getElementById('dashboardView').style.display = 'block';
+      document.getElementById('navUser').innerText = 'User: ' + email.split('@')[0];
+      document.getElementById('balance').innerText = bal.toFixed(2);
+      document.getElementById('loginSection').style.display = 'none';
+      document.getElementById('dashboardSection').style.display = 'block';
     }
 
-    function startAd(id, reward) {
+    function watchAd(id, reward) {
       const modal = document.getElementById('adModal');
-      const progress = document.getElementById('progressFill');
-      const countdown = document.getElementById('countdown');
+      const fill = document.getElementById('pFill');
+      const timer = document.getElementById('timer');
       const btn = document.getElementById('ad' + id);
 
       modal.style.display = 'flex';
-      progress.style.width = '0%';
-      let timeLeft = 5;
+      fill.style.width = '0%';
+      let count = 5;
 
-      let timer = setInterval(() => {
-        timeLeft--;
-        progress.style.width = ((5 - timeLeft) * 20) + '%';
-        countdown.innerText = timeLeft + 's';
+      let interval = setInterval(() => {
+        count--;
+        fill.style.width = ((5 - count) * 20) + '%';
+        timer.innerText = count + 's';
 
-        if(timeLeft <= 0) {
-          clearInterval(timer);
+        if(count <= 0) {
+          clearInterval(interval);
           setTimeout(() => {
             modal.style.display = 'none';
-            balance += reward;
-            completedCount++;
-            localStorage.setItem('ptc_bal_' + currentUser, balance);
-            document.getElementById('totalBalance').innerText = balance;
-            document.getElementById('adsCount').innerText = completedCount;
+            bal += reward;
+            watched++;
+            localStorage.setItem('nexus_bal_' + user, bal);
+            document.getElementById('balance').innerText = bal.toFixed(2);
+            document.getElementById('adsCount').innerText = watched;
             btn.innerText = 'Completed ✅';
             btn.disabled = true;
           }, 300);
@@ -246,39 +306,34 @@
       }, 1000);
     }
 
-    function openWithdrawModal() {
-      if(balance < 50) {
-        alert('Minimum payout limit is Rs. 50. Watch more ads to earn!');
+    function openWithdraw() {
+      if(bal < 50) {
+        alert('Minimum payout is Rs. 50. Watch more ads to earn!');
         return;
       }
       document.getElementById('withdrawModal').style.display = 'flex';
     }
 
-    function closeWithdrawModal() {
+    function closeWithdraw() {
       document.getElementById('withdrawModal').style.display = 'none';
     }
 
     function submitWithdraw() {
-      const num = document.getElementById('accNumber').value.trim();
+      const no = document.getElementById('accNo').value.trim();
       const name = document.getElementById('accName').value.trim();
-      const method = document.getElementById('payMethod').value;
+      const method = document.getElementById('method').value;
 
-      if(!num || !name) {
-        alert('Please fill out account details correctly!');
+      if(!no || !name) {
+        alert('Please fill out account details!');
         return;
       }
 
-      alert(`Withdrawal Request Submitted! 🎉\n\nMethod: ${method}\nAccount: ${num}\nName: ${name}\nAmount: Rs. ${balance}\n\nYour request will be processed within 24 hours.`);
-      
-      balance = 0;
-      localStorage.setItem('ptc_bal_' + currentUser, 0);
-      document.getElementById('totalBalance').innerText = 0;
-      closeWithdrawModal();
+      alert(`Withdrawal Submitted! 🎉\nMethod: ${method}\nAccount: ${no}\nAmount: Rs. ${bal}\nStatus: Processing (24h)`);
+      bal = 0;
+      localStorage.setItem('nexus_bal_' + user, 0);
+      document.getElementById('balance').innerText = '0.00';
+      closeWithdraw();
     }
   </script>
 </body>
 </html>
-
-
-   
-        
