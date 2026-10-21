@@ -3,229 +3,279 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NexusPay Pro - Premium PTC Earning Platform</title>
+  <title>NexusPay Pro - Atmospheric Glass Portal</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #0b0f17;
-      --panel: #131b2e;
-      --card: #1c273e;
-      --border: rgba(255, 255, 255, 0.08);
-      --primary: #38bdf8;
-      --accent: #22c55e;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-    }
-
     * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; }
-    body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
-
-    /* NAVBAR */
-    header {
-      background: var(--panel);
-      border-bottom: 1px solid var(--border);
-      padding: 16px 24px;
+    
+    body {
+      background: #030712;
+      color: #f8fafc;
+      min-height: 100vh;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      position: sticky; top: 0; z-index: 50;
+      padding: 20px;
+      overflow: hidden;
+      position: relative;
     }
-    .logo { font-size: 20px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px; }
-    .logo span { color: var(--primary); }
+
+    /* ANIMATED BACKGROUND CANVAS */
+    #bgCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* AMBIENT GLOW ORBS (HALKI HALKI MOVEMENT) */
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 2;
+      animation: floatOrb 12s ease-in-out infinite alternate;
+    }
+
+    .orb-1 {
+      width: 320px;
+      height: 320px;
+      background: rgba(30, 58, 138, 0.35);
+      top: -10%;
+      left: 15%;
+    }
+
+    .orb-2 {
+      width: 380px;
+      height: 380px;
+      background: rgba(15, 118, 110, 0.25);
+      bottom: -15%;
+      right: 10%;
+      animation-delay: -6s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(30px, -25px) scale(1.08); }
+      100% { transform: translate(-20px, 35px) scale(0.95); }
+    }
+
+    /* GLASS FLOATING CARD */
+    .glass-card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 420px;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 28px;
+      padding: 38px 32px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transition: transform 0.4s ease, border-color 0.4s ease;
+    }
+
+    .glass-card:hover {
+      border-color: rgba(56, 189, 248, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .card-header { text-align: center; margin-bottom: 26px; }
+    .card-header h2 { font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+    .card-header p { color: #94a3b8; font-size: 13px; margin-top: 6px; }
+
+    .input-group { margin-bottom: 20px; text-align: left; }
+    label { font-size: 12px; font-weight: 700; color: #cbd5e1; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    
+    input, select {
+      width: 100%;
+      padding: 15px 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(3, 7, 18, 0.6);
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus { 
+      border-color: #38bdf8; 
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.3);
+      background: rgba(3, 7, 18, 0.85);
+    }
+
+    .btn-main {
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: white;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 12px 25px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-main:hover { opacity: 0.92; transform: translateY(-2px); box-shadow: 0 15px 30px rgba(37, 99, 235, 0.5); }
+
+    .dashboard { display: none; }
+    
     .user-pill {
       background: rgba(56, 189, 248, 0.1);
       border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; color: var(--primary);
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      margin-bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    /* MAIN CONTAINER */
-    main { max-width: 1100px; width: 100%; margin: 0 auto; padding: 30px 20px; flex: 1; }
-
-    /* LOGIN CONTAINER */
-    .login-box {
-      max-width: 420px; margin: 40px auto; background: var(--panel); border: 1px solid var(--border);
-      border-radius: 20px; padding: 32px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+    .stat-box {
+      background: rgba(3, 7, 18, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 16px;
+      border-radius: 14px;
     }
-    .input-group { text-align: left; margin-bottom: 20px; }
-    .input-group label { font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 8px; display: block; }
-    input, select {
-      width: 100%; padding: 14px; border-radius: 10px; border: 1px solid var(--border);
-      background: #090d16; color: #fff; font-size: 14px; outline: none;
+
+    .stat-box small { color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 4px; }
+    .stat-box .val { font-size: 20px; font-weight: 800; color: #22c55e; text-shadow: 0 0 10px rgba(34,197,94,0.3); }
+
+    .ad-item {
+      background: rgba(3, 7, 18, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 16px;
+      border-radius: 14px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.2s;
     }
-    input:focus, select:focus { border-color: var(--primary); }
 
-    .btn {
-      width: 100%; padding: 14px; border-radius: 10px; border: none;
-      background: linear-gradient(135deg, #0284c7, #2563eb); color: #fff;
-      font-weight: 700; font-size: 15px; cursor: pointer; transition: 0.2s;
+    .ad-item:hover { border-color: rgba(56, 189, 248, 0.3); }
+    .ad-item h4 { font-size: 14px; font-weight: 700; color: #f1f5f9; }
+    .ad-item span { font-size: 12px; color: #22c55e; font-weight: 700; }
+
+    .btn-ad {
+      padding: 9px 16px;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      transition: 0.2s;
     }
-    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
 
-    /* DASHBOARD LAYOUT */
-    .dashboard { display: none; }
-    .hero-banner {
-      background: linear-gradient(135deg, #1e1b4b, var(--panel));
-      border: 1px solid var(--border); border-radius: 20px; padding: 24px; margin-bottom: 24px;
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
-    }
-    .hero-text h2 { font-size: 22px; font-weight: 800; }
-    .hero-text p { color: var(--muted); font-size: 14px; margin-top: 4px; }
+    .btn-ad:hover { background: rgba(56, 189, 248, 0.3); }
+    .btn-ad:disabled { opacity: 0.4; cursor: not-allowed; background: rgba(255,255,255,0.05); color: #94a3b8; border-color: transparent; }
 
-    .stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 30px; }
-    .stat-card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
-    .stat-card small { color: var(--muted); font-size: 12px; font-weight: 600; text-transform: uppercase; }
-    .stat-card .amount { font-size: 26px; font-weight: 800; color: var(--accent); margin-top: 6px; }
-
-    .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
-    @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
-
-    .section-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-
-    .ad-list { display: flex; flex-direction: column; gap: 12px; }
-    .ad-card {
-      background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px;
-      display: flex; justify-content: space-between; align-items: center; transition: 0.2s;
-    }
-    .ad-card:hover { border-color: rgba(56, 189, 248, 0.3); }
-    .ad-info h4 { font-size: 15px; font-weight: 700; }
-    .ad-info span { color: var(--accent); font-size: 13px; font-weight: 700; }
-
-    .btn-sm { width: auto; padding: 10px 18px; font-size: 13px; background: rgba(56, 189, 248, 0.15); color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.3); }
-    .btn-sm:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    /* RECENT PAYOUTS FEED */
-    .payouts-card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
-    .payout-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
-    .payout-item:last-child { border: none; }
-
-    /* MODALS */
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 100; justify-content: center; align-items: center; padding: 20px; }
-    .modal-box { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 28px; width: 100%; max-width: 400px; text-align: center; }
-    .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 20px 0; overflow: hidden; }
-    .progress-fill { height: 100%; width: 0%; background: var(--primary); transition: width 1s linear; }
-
-    footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; margin-top: auto; }
+    /* MODAL */
+    .modal { display: none; position: fixed; inset: 0; background: rgba(3, 7, 18, 0.85); backdrop-filter: blur(12px); z-index: 100; justify-content: center; align-items: center; padding: 20px; }
+    .modal-card { width: 100%; max-width: 390px; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 24px; padding: 28px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.9); }
+    .progress-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 18px 0; overflow: hidden; }
+    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #0284c7, #38bdf8); transition: width 1s linear; }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="logo">🚀 NexusPay<span>PRO</span></div>
-    <div class="user-pill" id="navUser">Status: Guest</div>
-  </header>
+  <!-- BACKGROUND PARTICLES & GLOW -->
+  <canvas id="bgCanvas"></canvas>
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
 
-  <main>
-    <!-- LOGIN PAGE -->
-    <div id="loginSection" class="login-box">
-      <h2 style="font-size:24px; font-weight:800; margin-bottom:8px;">Welcome Back 👋</h2>
-      <p style="color:var(--muted); font-size:13px; margin-bottom:24px;">Enter your email to open your earning dashboard</p>
-      
+  <!-- FLOATING GLASS CONTAINER -->
+  <div class="glass-card">
+    
+    <!-- LOGIN VIEW -->
+    <div id="loginView">
+      <div class="card-header">
+        <h2>NexusPay ⚡</h2>
+        <p>Enter details to access your portal</p>
+      </div>
+
       <div class="input-group">
         <label>Email Address</label>
-        <input type="email" id="userEmail" placeholder="e.g. user@gmail.com" />
+        <input type="email" id="email" placeholder="user@gmail.com" />
       </div>
 
-      <button class="btn" onclick="login()">Enter Portal ⚡</button>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="pass" placeholder="••••••••" />
+      </div>
+
+      <button class="btn-main" onclick="handleLogin()">Sign In</button>
     </div>
 
-    <!-- DASHBOARD PAGE -->
-    <div id="dashboardSection" class="dashboard">
-      
-      <div class="hero-banner">
-        <div class="hero-text">
-          <h2>Earn Money Watching Sponsor Ads 💰</h2>
-          <p>Watch 5-second ads and withdraw instantly to JazzCash or EasyPaisa.</p>
-        </div>
-        <button class="btn" style="width:auto; padding:12px 24px; background: #16a34a;" onclick="openWithdraw()">Withdraw Funds 💳</button>
+    <!-- DASHBOARD VIEW -->
+    <div id="dashboardView" class="dashboard">
+      <div class="card-header" style="margin-bottom: 18px;">
+        <h2>Dashboard 🚀</h2>
       </div>
 
-      <div class="stats-container">
-        <div class="stat-card">
-          <small>Current Balance</small>
-          <div class="amount">Rs. <span id="balance">0.00</span></div>
+      <div class="user-pill">
+        <span>👤 <strong id="usernameDisplay"></strong></span>
+        <span style="color:#22c55e; font-weight:700; font-size: 12px; display:flex; align-items:center; gap:6px;"><span style="width:7px; height:7px; background:#22c55e; border-radius:50%; box-shadow:0 0 8px #22c55e; display:inline-block;"></span> Online</span>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <small>Balance</small>
+          <div class="val">Rs. <span id="balance">0</span></div>
         </div>
-        <div class="stat-card">
-          <small>Total Ads Completed</small>
-          <div class="amount" style="color:var(--primary);" id="adsCount">0</div>
-        </div>
-        <div class="stat-card">
-          <small>Minimum Payout</small>
-          <div class="amount" style="color:#f59e0b;">Rs. 50.00</div>
+        <div class="stat-box">
+          <small>Ads Watched</small>
+          <div class="val" style="color:#38bdf8;" id="adsCount">0</div>
         </div>
       </div>
 
-      <div class="grid-2">
-        <!-- ADS SECTION -->
+      <div style="font-size:13px; font-weight:700; margin-bottom:12px; color:#cbd5e1;">Available Sponsor Ads</div>
+
+      <div class="ad-item">
         <div>
-          <div class="section-title">📺 Available High-Pay Ads</div>
-          <div class="ad-list">
-            <div class="ad-card">
-              <div class="ad-info">
-                <h4>Sponsor Ad #1 (Tech Promo)</h4>
-                <span>+ Rs. 15.00</span>
-              </div>
-              <button class="btn btn-sm" id="ad1" onclick="watchAd(1, 15)">Watch Ad (5s)</button>
-            </div>
-
-            <div class="ad-card">
-              <div class="ad-info">
-                <h4>Sponsor Ad #2 (Crypto Exchange)</h4>
-                <span>+ Rs. 25.00</span>
-              </div>
-              <button class="btn btn-sm" id="ad2" onclick="watchAd(2, 25)">Watch Ad (5s)</button>
-            </div>
-
-            <div class="ad-card">
-              <div class="ad-info">
-                <h4>Sponsor Ad #3 (Gaming App)</h4>
-                <span>+ Rs. 20.00</span>
-              </div>
-              <button class="btn btn-sm" id="ad3" onclick="watchAd(3, 20)">Watch Ad (5s)</button>
-            </div>
-          </div>
+          <h4>Sponsor Ad #1</h4>
+          <span>+ Rs. 15.00</span>
         </div>
-
-        <!-- RECENT PAYOUTS -->
-        <div>
-          <div class="section-title">🔥 Live Payout Feed</div>
-          <div class="payouts-card">
-            <div class="payout-item">
-              <span>Ali R. (JazzCash)</span>
-              <strong style="color:var(--accent)">Rs. 150</strong>
-            </div>
-            <div class="payout-item">
-              <span>Usman K. (EasyPaisa)</span>
-              <strong style="color:var(--accent)">Rs. 200</strong>
-            </div>
-            <div class="payout-item">
-              <span>Hamza S. (JazzCash)</span>
-              <strong style="color:var(--accent)">Rs. 80</strong>
-            </div>
-            <div class="payout-item">
-              <span>Zain M. (EasyPaisa)</span>
-              <strong style="color:var(--accent)">Rs. 350</strong>
-            </div>
-          </div>
-        </div>
+        <button class="btn-ad" id="adBtn1" onclick="startAd(1, 15)">Watch (5s)</button>
       </div>
 
+      <div class="ad-item">
+        <div>
+          <h4>Sponsor Ad #2</h4>
+          <span>+ Rs. 25.00</span>
+        </div>
+        <button class="btn-ad" id="adBtn2" onclick="startAd(2, 25)">Watch (5s)</button>
+      </div>
+
+      <button class="btn-main" style="margin-top: 16px; background: linear-gradient(135deg, #16a34a, #22c55e);" onclick="openWithdrawModal()">Withdraw Funds 💳</button>
     </div>
-  </main>
 
-  <!-- AD MODAL -->
+  </div>
+
+  <!-- AD TIMER MODAL -->
   <div class="modal" id="adModal">
-    <div class="modal-box">
-      <h3>Watching Sponsor Ad</h3>
-      <div class="progress-bar"><div class="progress-fill" id="pFill"></div></div>
-      <div id="timer" style="font-size:24px; font-weight:800; color:var(--primary);">5s</div>
+    <div class="modal-card">
+      <h3 style="color:#fff; font-size:18px;">Verifying Ad Stream</h3>
+      <div class="progress-bg"><div class="progress-fill" id="progressFill"></div></div>
+      <div id="countdown" style="font-size: 26px; font-weight: 800; color: #38bdf8;">5s</div>
     </div>
   </div>
 
   <!-- WITHDRAW MODAL -->
   <div class="modal" id="withdrawModal">
-    <div class="modal-box" style="text-align:left;">
-      <h3 style="text-align:center; margin-bottom:16px;">Request Withdrawal</h3>
+    <div class="modal-card" style="text-align: left;">
+      <h3 style="text-align: center; margin-bottom: 16px; color:#fff;">Request Payout</h3>
       
       <div class="input-group">
         <label>Payment Method</label>
@@ -236,8 +286,8 @@
       </div>
 
       <div class="input-group">
-        <label>Account Number</label>
-        <input type="text" id="accNo" placeholder="03001234567" />
+        <label>Mobile Number</label>
+        <input type="text" id="accNum" placeholder="03001234567" />
       </div>
 
       <div class="input-group">
@@ -245,60 +295,108 @@
         <input type="text" id="accName" placeholder="Account Holder Name" />
       </div>
 
-      <button class="btn" onclick="submitWithdraw()">Submit Payout Request</button>
-      <button class="btn" style="margin-top:8px; background:transparent; border:1px solid var(--border);" onclick="closeWithdraw()">Cancel</button>
+      <button class="btn-main" onclick="submitWithdraw()">Submit Request</button>
+      <button class="btn-main" style="margin-top: 10px; background: transparent; border: 1px solid rgba(255,255,255,0.12); box-shadow: none;" onclick="closeWithdrawModal()">Cancel</button>
     </div>
   </div>
 
-  <footer>
-    &copy; 2026 NexusPay Network. All rights reserved. Secure PTC Portal.
-  </footer>
-
   <script>
-    let user = "";
-    let bal = 0;
-    let watched = 0;
+    /* ANIMATED PARTICLES BACKGROUND */
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
 
-    function login() {
-      const email = document.getElementById('userEmail').value.trim();
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.radius = Math.random() * 2 + 0.5;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.alpha = Math.random() * 0.5 + 0.2;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(56, 189, 248, ${this.alpha})`;
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    /* APP LOGIC */
+    let userEmail = "";
+    let userBalance = 0;
+    let watchedAds = 0;
+
+    function handleLogin() {
+      const email = document.getElementById('email').value.trim();
+      const pass = document.getElementById('pass').value.trim();
+
       if(!email || !email.includes('@')) {
         alert('Please enter a valid email address!');
         return;
       }
-      user = email;
-      const saved = localStorage.getItem('nexus_bal_' + user);
-      if(saved) bal = parseFloat(saved);
+      if(!pass) {
+        alert('Please enter your password!');
+        return;
+      }
 
-      document.getElementById('navUser').innerText = 'User: ' + email.split('@')[0];
-      document.getElementById('balance').innerText = bal.toFixed(2);
-      document.getElementById('loginSection').style.display = 'none';
-      document.getElementById('dashboardSection').style.display = 'block';
+      userEmail = email;
+      const saved = localStorage.getItem('nexus_bal_' + userEmail);
+      if(saved) userBalance = parseFloat(saved);
+
+      document.getElementById('usernameDisplay').innerText = email.split('@')[0];
+      document.getElementById('balance').innerText = userBalance;
+      document.getElementById('loginView').style.display = 'none';
+      document.getElementById('dashboardView').style.display = 'block';
     }
 
-    function watchAd(id, reward) {
+    function startAd(id, reward) {
       const modal = document.getElementById('adModal');
-      const fill = document.getElementById('pFill');
-      const timer = document.getElementById('timer');
-      const btn = document.getElementById('ad' + id);
+      const fill = document.getElementById('progressFill');
+      const timer = document.getElementById('countdown');
+      const btn = document.getElementById('adBtn' + id);
 
       modal.style.display = 'flex';
       fill.style.width = '0%';
-      let count = 5;
+      let timeLeft = 5;
 
       let interval = setInterval(() => {
-        count--;
-        fill.style.width = ((5 - count) * 20) + '%';
-        timer.innerText = count + 's';
+        timeLeft--;
+        fill.style.width = ((5 - timeLeft) * 20) + '%';
+        timer.innerText = timeLeft + 's';
 
-        if(count <= 0) {
+        if(timeLeft <= 0) {
           clearInterval(interval);
           setTimeout(() => {
             modal.style.display = 'none';
-            bal += reward;
-            watched++;
-            localStorage.setItem('nexus_bal_' + user, bal);
-            document.getElementById('balance').innerText = bal.toFixed(2);
-            document.getElementById('adsCount').innerText = watched;
+            userBalance += reward;
+            watchedAds++;
+            localStorage.setItem('nexus_bal_' + userEmail, userBalance);
+            document.getElementById('balance').innerText = userBalance;
+            document.getElementById('adsCount').innerText = watchedAds;
             btn.innerText = 'Completed ✅';
             btn.disabled = true;
           }, 300);
@@ -306,33 +404,33 @@
       }, 1000);
     }
 
-    function openWithdraw() {
-      if(bal < 50) {
-        alert('Minimum payout is Rs. 50. Watch more ads to earn!');
+    function openWithdrawModal() {
+      if(userBalance < 50) {
+        alert('Minimum payout limit is Rs. 50!');
         return;
       }
       document.getElementById('withdrawModal').style.display = 'flex';
     }
 
-    function closeWithdraw() {
+    function closeWithdrawModal() {
       document.getElementById('withdrawModal').style.display = 'none';
     }
 
     function submitWithdraw() {
-      const no = document.getElementById('accNo').value.trim();
+      const num = document.getElementById('accNum').value.trim();
       const name = document.getElementById('accName').value.trim();
       const method = document.getElementById('method').value;
 
-      if(!no || !name) {
+      if(!num || !name) {
         alert('Please fill out account details!');
         return;
       }
 
-      alert(`Withdrawal Submitted! 🎉\nMethod: ${method}\nAccount: ${no}\nAmount: Rs. ${bal}\nStatus: Processing (24h)`);
-      bal = 0;
-      localStorage.setItem('nexus_bal_' + user, 0);
-      document.getElementById('balance').innerText = '0.00';
-      closeWithdraw();
+      alert(`Withdrawal Request Submitted! 🎉\nMethod: ${method}\nAccount: ${num}\nAmount: Rs. ${userBalance}`);
+      userBalance = 0;
+      localStorage.setItem('nexus_bal_' + userEmail, 0);
+      document.getElementById('balance').innerText = 0;
+      closeWithdrawModal();
     }
   </script>
 </body>
