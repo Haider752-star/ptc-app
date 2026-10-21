@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click to Earn - PTC App</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #f4f4f9; }
+        .ad-card { background: white; padding: 15px; margin: 10px auto; max-width: 300px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .btn { background: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>PTC Ads</h1>
+    <div id="ads-container">Loading Ads...</div>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+      const SUPABASE_URL = 'https://vjmzvsvushejbatdglcj.supabase.co';
+      const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqbXp2c3Z1c2hlamJhdGRnbGNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1NjM3MjQsImV4cCI6MjEwODEzOTcyNH0.4wjswwi6BH5p_y43SnOOYt-2jmgzCHaivOoTZ6Ovj4c';
+
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      async function fetchAds() {
+        const { data: ads, error } = await supabase.from('ads').select('*');
+        const container = document.getElementById('ads-container');
+        
+        if (error) {
+          console.error(error);
+          container.innerHTML = '<p>Error loading ads.</p>';
+          return;
+        }
+
+        if (!ads || ads.length === 0) {
+          container.innerHTML = '<p>No ads available right now.</p>';
+          return;
+        }
+
+        container.innerHTML = '';
+        ads.forEach(ad => {
+          container.innerHTML += `
+            <div class="ad-card">
+              <h3>${ad.title}</h3>
+              <p>Reward: ${ad.reward} Coins</p>
+              <a href="${ad.ad_url}" target="_blank">
+                <button class="btn">View Ad (${ad.duration}s)</button>
+              </a>
+            </div>
+          `;
+        });
+      }
+
+      fetchAds();
+    </script>
+</body>
+</html>
